@@ -1,0 +1,7 @@
+{
+    "paypalConfig": {
+        "host": "api.sandbox.paypal.com",
+        "client_id": "AVweyxD7IVfkvMjVS5E0RKTgQCUX7vEWgcfMqbkuKxJdsmMa5_SqpGXlZswl",
+        "client_secret": "ED8MlRD5nfwljvkobSt61E7MoIspiU1y5JWNdvK3gbPKwOqRt0X6bRNCBYyX"
+    }
+}

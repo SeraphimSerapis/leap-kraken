@@ -1,0 +1,69 @@
+{>"layouts/master" /}
+
+{<body}
+    <h1 class="seconds"></h1>
+    <h1 class="amount"></h1>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="//js.leapmotion.com/0.3.0/leap.min.js"></script>
+    <script type="text/javascript">
+        var connected;
+        var step = 0;
+        var lastY;
+        var currentY;
+        var motion;
+        var seconds = 30;
+        var amount = 0.00;
+
+        var controller = new Leap.Controller({enableGestures: true});
+
+        controller.loop(function (frame) {
+            if (seconds > 0 && frame.hands.length >= 1) {
+                var hand = frame.hands[0];
+                step++;
+                if (step === 15) {
+                    currentY = hand.palmPosition[1];
+                    if ((lastY <= currentY) && (lastY - currentY <= -10)) {
+                        motion = 'UP';
+                        amount++;
+                    } else {
+                        motion = 'DOWN';
+                        amount--;
+                        if(amount < 0) {
+                            amount = 0;
+                        }
+                    }
+                    lastY = currentY;
+                    step = 0;
+                }
+            }
+        });
+
+        controller.on('connect', function () {
+            console.log("Successfully connected.");
+            connected = true;
+        });
+
+        controller.on('deviceConnected', function () {
+            console.log("A Leap device has been connected.");
+        });
+
+        controller.on('deviceDisconnected', function () {
+            console.log("A Leap device has been disconnected.");
+        });
+
+        controller.connect();
+
+        var intervalId = setInterval(function() {
+            if (connected) {
+                if (seconds > 0) {
+                    $('.seconds').text(seconds + ' seconds left');
+                    $('.amount').text('Current amount is: ' + amount + ' USD');
+                    seconds--;
+                } else {
+                    window.location.replace('/pay?amount=' + amount);
+                    clearInterval(intervalId);
+                }
+            }
+        }, 1000);
+    </script>
+{/body}

@@ -1,0 +1,25 @@
+{>"layouts/master" /}
+
+{<body}
+    {?create}
+        {?error}
+            <h1>Error when creating payment</h1>
+            <pre>{error_message}</pre>
+        {/error}
+    {/create}
+    {?execute}
+        {#success}
+            <h1>Hell yeah!</h1>
+            <pre>{payment}</pre>
+        {:else}
+            <h1>Error when executing payment</h1>
+            <pre>{error_message}</pre>
+        {/success}
+    {/execute}
+    {?cancel}
+        <h1>The payment just got canceled</h1>
+    {/cancel}
+    <a href="/">
+        <button>Do another payment</button>
+    </a>
+{/body}

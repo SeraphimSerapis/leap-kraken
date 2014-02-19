@@ -1,0 +1,13 @@
+{
+    "middleware": {
+        "errorPages": {
+            "404": "errors/404",
+            "500": "errors/500",
+            "503": "errors/503"
+        },
+        "session": {
+            "module": "memory",
+            "secret": "78dc4dbaad70c84b63df83979c321b6d02c2171a"
+        }
+    }
+}
